@@ -1,4 +1,4 @@
-name: Push to buf BSR
+name: Lint Check Buf
 
 on: 
    pull_request: 
