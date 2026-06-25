@@ -1,0 +1,19 @@
+name: Push to buf BSR
+
+on: 
+   pull_request: 
+      branches: 
+         - develop
+      paths: 
+         - 'proto/**'
+
+jobs:
+   buf-lint:
+      runs-on: ubuntu-slim
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v4
+         - name: Setup buf
+           uses: bufbuild/buf-setup-action@v1
+         - name: Lint Buf proto files
+           uses: bufbuild/buf-lint-action@v1
