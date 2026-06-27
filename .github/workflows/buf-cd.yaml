@@ -1,0 +1,18 @@
+name: Push buf to schema Registry
+
+on: 
+    workflow_call: 
+
+jobs:
+    buf-push:
+        runs-on: ubuntu-slim
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup Buf
+              uses: bufbuild/buf-setup-action@v1
+            - name: Push code to BSR
+              uses: bufbuild/buf-push-action@v1
+              with:
+                buf_token: ${{secrets.BUF_TOKEN}}
+                
