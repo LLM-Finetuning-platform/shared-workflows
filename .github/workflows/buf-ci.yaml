@@ -1,26 +1,7 @@
 name: Lint Check Buf
 
 on: 
-   pull_request: 
-      branches: 
-         - develop
-         - main
-      paths: 
-         - 'proto/**'
-         - '**.proto'
-         - '**/buf.yaml'
-         - '**/buf.lock'
-         - '**/buf.md'
-   push: 
-      branches: 
-         - develop
-         - main
-      paths: 
-         - 'proto/**'
-         - '**.proto'
-         - '**/buf.yaml'
-         - '**/buf.lock'
-         - '**/buf.md'               
+  workflow_call:
 
 jobs:
    buf-lint:
