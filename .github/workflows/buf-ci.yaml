@@ -1,0 +1,30 @@
+name: Lint Check Buf
+
+on: 
+  workflow_call:
+
+jobs:
+   buf-lint:
+      runs-on: ubuntu-slim
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v4
+         - name: Setup buf
+           uses: bufbuild/buf-setup-action@v1
+         - name: Lint Buf proto files
+           uses: bufbuild/buf-lint-action@v1
+
+   buf-breaking:
+      runs-on: ubuntu-slim
+      needs: buf-lint
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v4
+         - name: Checkout code
+           uses: actions/checkout@v4
+         - name: Setup buf
+           uses: bufbuild/buf-setup-action@v1
+         - name: Check breaking proto files
+           uses: bufbuild/buf-breaking-action@v1
+           with:
+              against: 'https://github.com/${{ github.repository }}.git#branch=main'
