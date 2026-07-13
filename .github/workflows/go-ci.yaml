@@ -1,9 +1,43 @@
-name: CI & Lint check go
+name: GoLang Production CI
 
 on: 
     workflow_call: 
 
 jobs:
+   verify: 
+        name: Verify & Tidy
+        runs-on: ubuntu-slim
+        steps:
+          - name: Checkout Code
+            uses: actions/checkout@v4
+          - name: Setup GO
+            uses: actions/setup-go@v5
+            with:
+              go-version-file: 'go.mod'
+              cache: true
+          - name: Verify Dependencies
+            run: |
+              go mod download
+              go mod tidy
+              git diff --exit-code go.mod go.sum
+   go-security:
+          name: Security and Vulnerability check
+          needs: verify
+          runs-on: ubuntu-slim
+          steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup GO
+              uses: actions/setup-go@v5
+              with:
+                go-version-file: 'go.mod'
+                cache: true
+            - name: Run GO Vulnc Check
+              uses: golang/govulncheck-action@v1 # use the shell command to utilize the cache setup in place
+              with:
+                go-version-file: 'go.mod'
+   
+
    go-lint:
         runs-on: ubuntu-slim
         steps:
@@ -12,8 +46,8 @@ jobs:
             - name: Set up go
               uses: actions/setup-go@v5
               with:
-                go-version: 'stable'
-                cache: false
+                go-version-file: 'go.mod'
+                cache: true
             - name: Run GolangCI Lint
               uses: golangci/golangci-lint-action@v6
               with:
