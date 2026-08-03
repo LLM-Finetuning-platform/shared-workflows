@@ -10,6 +10,17 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+            - name: Filter out Path
+              uses: dorny/paths-filter@v3
+              id: changes
+              with:
+                filters: | 
+                  proto_files:
+                    - 'proto/**'
+                    - '**.proto'
+                    - '**/buf.yaml'
+                    - '**/buf.lock'
+                    - '**/buf.md'
             - name: Setup Buf
               uses: bufbuild/buf-setup-action@v1
             - name: Push code to BSR
