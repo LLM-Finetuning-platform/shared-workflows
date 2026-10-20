@@ -1,4 +1,4 @@
-name: Lint Check Buf
+name: CI Check Buf
 
 on: 
   workflow_call:
