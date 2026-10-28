@@ -13,10 +13,5 @@ jobs:
               uses: astral-sh/setup-uv@v5
               with:
                 enable-cache: true
-                cache-dependency-blob: "uv.lock"
-            
-            - name: Install dependencies and project
-              run: uv sync --frozen --all-extras --dev
-
             - name: Run Linting using Ruff
-              run: uv run ruff check
+              run: uvx ruff check
